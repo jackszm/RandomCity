@@ -1,5 +1,6 @@
 package com.jsz.randomcity
 
+import androidx.annotation.ColorRes
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -75,3 +76,16 @@ data class ColorfulCity(
     val city: String,
     val color: String
 )
+
+@ColorRes
+fun mapColor(color: String): Int {
+    return when (color) {
+        "Yellow" -> R.color.yellow
+        "Green" -> R.color.green
+        "Blue" -> R.color.blue
+        "Red" -> R.color.red
+        "Black" -> R.color.black
+        "White" -> R.color.white
+        else -> R.color.black
+    }
+}

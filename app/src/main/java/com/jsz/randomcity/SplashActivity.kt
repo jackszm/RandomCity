@@ -2,6 +2,7 @@ package com.jsz.randomcity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.jsz.randomcity.main.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
