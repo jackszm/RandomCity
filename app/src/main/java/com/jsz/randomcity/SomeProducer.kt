@@ -3,6 +3,7 @@ package com.jsz.randomcity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -11,16 +12,22 @@ import io.reactivex.subjects.PublishSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class SomeProducer : LifecycleObserver {
+class SomeProducer private constructor() : LifecycleObserver {
 
-        private val disposables: CompositeDisposable = CompositeDisposable()
+    private val disposables: CompositeDisposable = CompositeDisposable()
     private val subject = PublishSubject.create<ColorfulCity>()
     private val random = Random(System.currentTimeMillis())
 
-    val events: Observable<ColorfulCity>
-        get() {
-            return subject
-        }
+    private object HOLDER {
+        val INSTANCE = SomeProducer()
+    }
+
+    init {
+        ProcessLifecycleOwner
+            .get()
+            .lifecycle
+            .addObserver(this)
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onBackground() {
@@ -38,6 +45,10 @@ class SomeProducer : LifecycleObserver {
             }
             .subscribeOn(Schedulers.io())
             .subscribe { subject.onNext(it) }
+    }
+
+    companion object {
+        val producerEvents: Observable<ColorfulCity> by lazy { HOLDER.INSTANCE.subject }
     }
 }
 

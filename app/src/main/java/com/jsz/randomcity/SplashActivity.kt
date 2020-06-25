@@ -17,7 +17,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun listenForFirstProducerEmission() {
-        disposables += (application as RandomCityApp).producerEvents()
+        disposables += SomeProducer.producerEvents
             .observeOn(AndroidSchedulers.mainThread())
             .take(1)
             .singleOrError()
