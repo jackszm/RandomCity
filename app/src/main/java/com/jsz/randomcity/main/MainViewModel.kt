@@ -1,5 +1,6 @@
 package com.jsz.randomcity.main
 
+import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -43,11 +44,15 @@ class MainViewModel(
 
     }
 
-    private fun List<DbCity>.toCity(): List<City> = map {
+    fun onCityClicked(city: City) {
+        Log.e("!!!", "Clicke")
+    }
+
+    private fun List<DbCity>.toCity(): List<City> = map { dbCity ->
         City(
-            name = it.name,
-            timeStamp = dateFormatter.format(Date(it.timestamp)),
-            color = mapColor(it.color)
+            name = dbCity.name,
+            timeStamp = dateFormatter.format(Date(dbCity.timestamp)),
+            color = mapColor(dbCity.color)
         )
     }
 

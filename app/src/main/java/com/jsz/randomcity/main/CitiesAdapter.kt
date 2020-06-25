@@ -10,27 +10,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jsz.randomcity.R
 import com.jsz.randomcity.main.MainViewModel.City
 
-class CitiesAdapter : ListAdapter<City, CitiesAdapter.MyViewHolder>(diffCallback) {
+class CitiesAdapter(
+    private val clickAction: (city: City) -> Unit = {}
+) : ListAdapter<City, CitiesAdapter.MyViewHolder>(diffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_city, parent, false)
-        return MyViewHolder(view)
+        return MyViewHolder(clickAction, view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class MyViewHolder(
+        private val clickAction: (city: City) -> Unit,
+        view: View
+    ) : RecyclerView.ViewHolder(view) {
         private val nameTextView = view.findViewById<TextView>(R.id.cityName)
         private val timeStampTextView = view.findViewById<TextView>(R.id.cityTimestamp)
 
         fun bind(city: City) {
+            itemView.setOnClickListener { clickAction(city) }
             nameTextView.text = city.name
             nameTextView.setTextColor(nameTextView.resources.getColor(city.color))
             timeStampTextView.text = city.timeStamp
         }
-
     }
 }
 

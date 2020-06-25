@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = CitiesAdapter()
+        val adapter = CitiesAdapter { viewModel.onCityClicked(it) }
         recycler_view.apply {
             this.adapter = adapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
