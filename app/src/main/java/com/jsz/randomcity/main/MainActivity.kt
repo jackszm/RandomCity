@@ -14,9 +14,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val cityStorage by lazy { (application as RandomCityApp).db.cityStorage() }
     private val viewModel: MainViewModel by viewModels {
-        MainViewModelFactory(cityStorage)
+        MainViewModelFactory(
+            cityStorage = (application as RandomCityApp).db.cityStorage(),
+            navigator = MainNavigator(this)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

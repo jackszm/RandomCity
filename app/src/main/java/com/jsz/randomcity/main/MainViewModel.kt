@@ -1,6 +1,5 @@
 package com.jsz.randomcity.main
 
-import android.util.Log
 import androidx.annotation.ColorRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +16,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class MainViewModel(
-    private val cityStorage: CityStorage
+    private val cityStorage: CityStorage,
+    private val navigator: MainNavigator
 ) : ViewModel() {
 
     private val disposables: CompositeDisposable = CompositeDisposable()
@@ -45,7 +45,7 @@ class MainViewModel(
     }
 
     fun onCityClicked(city: City) {
-        Log.e("!!!", "Clicke")
+        navigator.toDetails()
     }
 
     private fun List<DbCity>.toCity(): List<City> = map { dbCity ->

@@ -5,10 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.jsz.randomcity.db.CityStorage
 
 class MainViewModelFactory(
-    private val cityStorage: CityStorage
+    private val cityStorage: CityStorage,
+    private val navigator: MainNavigator
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return MainViewModel(cityStorage) as T
+        return MainViewModel(cityStorage, navigator) as T
     }
 }
