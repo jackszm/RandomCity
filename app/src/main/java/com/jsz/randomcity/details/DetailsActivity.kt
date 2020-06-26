@@ -24,7 +24,7 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun longitude() = intent.getDoubleExtra(EXTRA_LONGITUDE, 0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if(toolbarColor() == R.color.white) {
+        if (toolbarColor() == R.color.white) {
             setTheme(R.style.AppTheme_LightActionBar);
         }
 
@@ -44,9 +44,23 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        val sydney = LatLng(latitude(), longitude())
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(12.0f), 400, null);
+        val city = LatLng(latitude(), longitude())
+//        googleMap.addMarker(MarkerOptions().position(city))
+
+        googleMap.animateCamera(
+            CameraUpdateFactory.zoomTo(12.0f),
+            object : GoogleMap.CancelableCallback {
+                override fun onFinish() {
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(city))
+                }
+
+                override fun onCancel() {
+                    // do Nothing
+                }
+
+            }
+        );
+
     }
 
     companion object {
