@@ -1,15 +1,13 @@
 package com.jsz.randomcity.main
 
 import androidx.annotation.ColorRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.jsz.randomcity.AppNavigator
 import com.jsz.randomcity.db.CityStorage
 import com.jsz.randomcity.db.DbCity
 import com.jsz.randomcity.mapColor
 import com.jsz.randomcity.mapPosition
+import com.jsz.randomcity.utils.BaseViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -18,19 +16,14 @@ import java.util.*
 
 class MainViewModel(
     private val cityStorage: CityStorage,
-    private val navigator: MainNavigator
-) : ViewModel() {
+    private val navigator: AppNavigator
+) : BaseViewModel<List<MainViewModel.City>>(emptyList()) {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
 
-    private val cities: MutableLiveData<List<City>> by lazy {
-        MutableLiveData<List<City>>().also {
-            loadCities()
-        }
+    init {
+        loadCities()
     }
-
-    fun observeCities(): LiveData<List<City>> = cities
 
     private fun loadCities() {
         disposables += cityStorage.getAll()
@@ -38,11 +31,8 @@ class MainViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .map { it.toCity().sortedBy { city -> city.name } }
             .subscribeBy(
-                onNext = {
-                    cities.value = it
-                }
+                onNext = { setState { it } }
             )
-
     }
 
     fun onCityClicked(city: City) {
@@ -75,5 +65,3 @@ class MainViewModel(
         val position: Pair<Double, Double>
     )
 }
-
-

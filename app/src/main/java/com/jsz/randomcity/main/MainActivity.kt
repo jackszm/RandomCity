@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.jsz.randomcity.AppNavigator
 import com.jsz.randomcity.R
 import com.jsz.randomcity.RandomCityApp
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(
             cityStorage = (application as RandomCityApp).db.cityStorage(),
-            navigator = MainNavigator(this)
+            navigator = AppNavigator(this)
         )
     }
 
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
-        viewModel.observeCities().observe(this, Observer<List<MainViewModel.City>> { cities ->
+        viewModel.state.observe(this, Observer<List<MainViewModel.City>> { cities ->
             adapter.submitList(cities)
         })
     }
