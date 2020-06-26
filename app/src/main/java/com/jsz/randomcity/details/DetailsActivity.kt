@@ -30,8 +30,6 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_details)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
         supportActionBar?.apply {
             title = name()
             setBackgroundDrawable(ColorDrawable(resources.getColor(toolbarColor())))
@@ -45,8 +43,6 @@ class DetailsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         val city = LatLng(latitude(), longitude())
-//        googleMap.addMarker(MarkerOptions().position(city))
-
         googleMap.animateCamera(
             CameraUpdateFactory.zoomTo(12.0f),
             object : GoogleMap.CancelableCallback {
