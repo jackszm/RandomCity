@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.jsz.randomcity.db.CityStorage
 import com.jsz.randomcity.db.DbCity
 import com.jsz.randomcity.mapColor
+import com.jsz.randomcity.mapPosition
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -45,14 +46,20 @@ class MainViewModel(
     }
 
     fun onCityClicked(city: City) {
-        navigator.toDetails()
+        navigator.toDetails(
+            city.name,
+            city.color,
+            city.position.first,
+            city.position.second
+        )
     }
 
     private fun List<DbCity>.toCity(): List<City> = map { dbCity ->
         City(
             name = dbCity.name,
             timeStamp = dateFormatter.format(Date(dbCity.timestamp)),
-            color = mapColor(dbCity.color)
+            color = mapColor(dbCity.color),
+            position = mapPosition(dbCity.name)
         )
     }
 
@@ -64,7 +71,8 @@ class MainViewModel(
     data class City(
         val name: String,
         val timeStamp: String,
-        @ColorRes val color: Int
+        @ColorRes val color: Int,
+        val position: Pair<Double, Double>
     )
 }
 

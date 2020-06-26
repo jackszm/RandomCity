@@ -89,3 +89,16 @@ fun mapColor(color: String): Int {
         else -> R.color.black
     }
 }
+
+fun mapPosition(city: String): Pair<Double, Double> {
+    return when (city) {
+        "Gdańsk" -> 54.356030 to 18.646120
+        "Warszawa" -> 52.237049 to 21.017532
+        "Poznań" -> 52.406376 to 16.925167
+        "Białystok" -> 53.13333 to 23.16433
+        "Wrocław" -> 51.107883 to 17.038538
+        "Katowice" -> 50.270908 to 19.039993
+        "Kraków" -> 50.049683 to 19.944544
+        else -> 52.237049 to 21.017532
+    }
+}
