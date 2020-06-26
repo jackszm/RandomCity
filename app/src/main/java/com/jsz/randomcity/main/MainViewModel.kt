@@ -1,6 +1,8 @@
 package com.jsz.randomcity.main
 
 import androidx.annotation.ColorRes
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.jsz.randomcity.AppNavigator
 import com.jsz.randomcity.db.CityStorage
 import com.jsz.randomcity.db.DbCity
@@ -65,3 +67,14 @@ class MainViewModel(
         val position: Pair<Double, Double>
     )
 }
+
+class MainViewModelFactory(
+    private val cityStorage: CityStorage,
+    private val navigator: AppNavigator
+) : ViewModelProvider.Factory {
+
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return MainViewModel(cityStorage, navigator) as T
+    }
+}
+
