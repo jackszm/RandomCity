@@ -7,8 +7,9 @@ import com.jsz.randomcity.main.MainActivity
 
 class AppNavigator(private val activity: Activity) {
 
-    fun toMain() {
+    fun toMainAndFinish() {
         activity.startActivity(MainActivity.buildIntent(activity))
+        activity.finish()
     }
 
     fun toDetails(name: String, @ColorRes color: Int, latitude: Double, longitude: Double) {

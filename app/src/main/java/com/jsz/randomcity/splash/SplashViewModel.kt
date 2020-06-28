@@ -19,7 +19,9 @@ class SplashViewModel(
             .take(1)
             .singleOrError()
             .subscribeBy(
-                onSuccess = { navigator.toMain() }
+                onSuccess = {
+                    navigator.toMainAndFinish()
+                }
             )
     }
 
