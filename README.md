@@ -21,4 +21,4 @@ private val colors = listOf("Yellow", "Green", "Blue", "Red", "Black", "White")
 
 | Animation | 
 | ---- | 
-| _coming soon_| 
+| ![App presentation](https://github.com/jackszm/RandomCity/blob/master/readme_gif.gif) | 
