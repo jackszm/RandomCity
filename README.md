@@ -21,4 +21,10 @@ private val colors = listOf("Yellow", "Green", "Blue", "Red", "Black", "White")
 
 | Animation | 
 | ---- | 
-| ![App presentation](https://github.com/jackszm/RandomCity/blob/master/readme_gif.gif) | 
+| ![](https://github.com/jackszm/RandomCity/blob/master/readme_gif.gif) | 
+
+
+Tablet screenshots: 
+| Hotizontal | Vertical| 
+ --- | --- 
+![](https://github.com/jackszm/RandomCity/blob/master/readme_tablet_01.png) | ![](https://github.com/jackszm/RandomCity/blob/master/readme_tablet_02.png)
