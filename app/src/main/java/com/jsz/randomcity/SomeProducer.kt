@@ -7,6 +7,7 @@ import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit
 
 class SomeProducer private constructor() : LifecycleObserver {
 
-    private val disposables: CompositeDisposable = CompositeDisposable()
+    private var disposable : Disposable? = null
     private val subject = PublishSubject.create<ColorfulCity>()
     private val random = Random(System.currentTimeMillis())
 
@@ -32,12 +33,13 @@ class SomeProducer private constructor() : LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onBackground() {
-        disposables.dispose()
+        disposable?.dispose()
+        disposable = null
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     fun onForeground() {
-        disposables += Observable.interval(5, TimeUnit.SECONDS)
+         disposable = Observable.interval(5, TimeUnit.SECONDS)
             .map {
                 ColorfulCity(
                     city = cities[random.nextInt(cities.size)],
